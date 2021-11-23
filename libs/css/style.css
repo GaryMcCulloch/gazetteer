@@ -50,7 +50,7 @@ body {
   position: absolute;
   z-index: 1000;
   pointer-events: none;
-  top: 10%; /* possible because the placeholder's parent is the map */
+  top: 50%; /* possible because the placeholder's parent is the map */
   transform: translateY(-50%); /* using the CSS3 Transform technique */
   padding-top: 10px;
 }

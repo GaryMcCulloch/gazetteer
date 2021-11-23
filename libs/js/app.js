@@ -11,8 +11,8 @@ const showPosition = (position) => {
     let lat = position.coords.latitude;
     let lng = position.coords.longitude;
 
-    // let lat = 63.515138;
-    // let lng = 26.892956;
+    // let lat = 49.902782;
+    // let lng = 12.496366;
     countryCodeSearch(lat, lng);
     getWeather(lat, lng)
 }
