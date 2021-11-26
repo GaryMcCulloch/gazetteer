@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 //Get user location
 const showPosition = (position) => {
 
-    // let lat = position.coords.latitude;
-    // let lng = position.coords.longitude;
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
 
     // let lat = 48.902782; //France
     // let lng = 2.496366;
@@ -17,8 +17,8 @@ const showPosition = (position) => {
     // let lng = 10.49;
     // let lat = 55.902782; //russia
     // let lng = 37.496366;
-    let lat = 44.902782; //Murica
-    let lng = -103.496366;
+    // let lat = 44.902782; //Murica
+    // let lng = -103.496366;
 
 
     countryCodeSearch(lat, lng);
@@ -138,7 +138,28 @@ function getCity(lat, lng, countryCode, countryName) {
             countryCode: countryCode
         },
         success: function(result) {
-            loadMap(lat, lng, countryCode, countryName, result);
+            let cityResult = result.results;
+            getPark(lat, lng, countryCode, countryName, cityResult);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('nope');
+        }
+    })
+}
+
+//Get park Information
+function getPark(lat, lng, countryCode, countryName, cityResult) {
+    $.ajax({
+        url: "libs/php/park.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            countryCode: countryCode
+        },
+        success: function(result) {
+            let parkResult = result.results;
+            console.log(parkResult)
+            loadMap(lat, lng, countryCode, countryName, cityResult, parkResult);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log('nope');
