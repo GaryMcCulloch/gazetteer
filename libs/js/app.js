@@ -8,13 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
 //Get user location
 const showPosition = (position) => {
 
-    let lat = position.coords.latitude;
-    let lng = position.coords.longitude;
+    // let lat = position.coords.latitude;
+    // let lng = position.coords.longitude;
 
-    // let lat = 49.902782;
-    // let lng = 12.496366;
+    // let lat = 48.902782; //France
+    // let lng = 2.496366;
+    // let lat = 51.90; //germany
+    // let lng = 10.49;
+    // let lat = 55.902782; //russia
+    // let lng = 37.496366;
+    let lat = 44.902782; //Murica
+    let lng = -103.496366;
+
+
     countryCodeSearch(lat, lng);
-    getWeather(lat, lng)
+    
+    // getCity();
 }
 
 // User location error
@@ -25,8 +34,9 @@ const showError = (error) => {
 }
 
 
-
 ///////////////////////////////////////////////////////////////AJAX////////////////////////////////////////////////////////////////////////////////
+
+
 
 //Find user country
 function countryCodeSearch(lat, lng) {
@@ -42,8 +52,10 @@ function countryCodeSearch(lat, lng) {
         success: function(result) {
             let countryName = result.data.countryName;
             let countryCode = result.data.countryCode;
-            loadMap(lat, lng, countryName);
-            countryInfo(countryCode);
+            if (countryCode == 'GB') {
+                countryCode = 'uk';
+            }
+            countryInfo(lat, lng, countryCode, countryName);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log('nope');
@@ -52,7 +64,7 @@ function countryCodeSearch(lat, lng) {
 }
 
 //Get country Information
-function countryInfo(countryCode) {
+function countryInfo(lat, lng, countryCode, countryName) {
     $.ajax({
         url: "libs/php/countryInfo.php",
         type: 'POST',
@@ -70,7 +82,7 @@ function countryInfo(countryCode) {
                 $('#population').html('Population:   ' + result['data'][0]['population']);
                 $('#currencyCode').html('Currency:   ' + result['data'][0]['currencyCode']);
                 $('#area').html('Country Size:   ' + result['data'][0]['areaInSqKm']);
-
+                getWeather(lat, lng, countryCode, countryName);
             }
         
         },
@@ -80,8 +92,8 @@ function countryInfo(countryCode) {
     });
 }
 
-//Get country Information
-function getWeather(lat, lng) {
+//Get weather Information
+function getWeather(lat, lng, countryCode, countryName) {
     $.ajax({
         url: "libs/php/openWeatherMap.php",
         type: 'POST',
@@ -106,15 +118,35 @@ function getWeather(lat, lng) {
                 $('#description').html('Description:   ' + result['current']['weather'][0]['description']);
                 $('#temp').html('Temperature:   ' + result['current']['temp']);
                 $('#windSpeed').html('Wind Speeds:   ' + result['current']['wind_speed']);
-
             }
-        
         },
+
         error: function(jqXHR, textStatus, errorThrown) {
             // your error code
         }
     });
+    getCity(lat, lng, countryCode, countryName);
 }
+
+//Get city Information
+function getCity(lat, lng, countryCode, countryName) {
+    $.ajax({
+        url: "libs/php/cities.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            countryCode: countryCode
+        },
+        success: function(result) {
+            loadMap(lat, lng, countryCode, countryName, result);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('nope');
+        }
+    })
+}
+
+
 
 
 

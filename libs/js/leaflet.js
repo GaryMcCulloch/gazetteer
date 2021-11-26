@@ -1,4 +1,13 @@
-const loadMap = (lat, lng, countryName) => {
+
+
+// const addMarker = (map, element) => {
+//     let city = L.marker([element.coordinates.latitude, element.coordinates.longitude]);
+//     console.log(element.coordinates.latitude)
+// }
+
+
+const loadMap = (lat, lng,countryCode, countryName, result) => {
+
 
     //Tile options for base layers
     let satellite = L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=PmYmuNRZMsQcvPp3DsmN', {
@@ -8,15 +17,29 @@ const loadMap = (lat, lng, countryName) => {
         attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
     });
 
-
-    let littleton = L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.'),
-    denver    = L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.'),
-    aurora    = L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.'),
-    golden    = L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.');
-
-    let cities = L.layerGroup([littleton, denver, aurora, golden]);
-
-    // base layers defined for controls
+    let city1Coords = [result.results[0].coordinates.latitude, result.results[0].coordinates.longitude];
+    let city2Coords = [result.results[1].coordinates.latitude, result.results[1].coordinates.longitude];
+    let city3Coords = [result.results[2].coordinates.latitude, result.results[2].coordinates.longitude];
+    let city4Coords = [result.results[3].coordinates.latitude, result.results[3].coordinates.longitude];
+    let city5Coords = [result.results[4].coordinates.latitude, result.results[4].coordinates.longitude];
+    let city6Coords = [result.results[5].coordinates.latitude, result.results[5].coordinates.longitude];
+    let city7Coords = [result.results[6].coordinates.latitude, result.results[6].coordinates.longitude];
+    let city8Coords = [result.results[7].coordinates.latitude, result.results[7].coordinates.longitude];
+    let city9Coords = [result.results[8].coordinates.latitude, result.results[8].coordinates.longitude];
+    let city10Coords = [result.results[9].coordinates.latitude, result.results[9].coordinates.longitude];
+    
+    let city1 = L.marker(city1Coords).bindPopup('This is Littleton, CO.'),
+        city2    = L.marker(city2Coords).bindPopup('This is Denver, CO.'),
+        city3    = L.marker(city3Coords).bindPopup('This is Aurora, CO.'),
+        city4    = L.marker(city4Coords).bindPopup('This is Golden, CO.'),
+        city5    = L.marker(city5Coords).bindPopup('This is Golden, CO.'),
+        city6    = L.marker(city6Coords).bindPopup('This is Golden, CO.'),
+        city7   = L.marker(city7Coords).bindPopup('This is Golden, CO.'),
+        city8    = L.marker(city8Coords).bindPopup('This is Golden, CO.'),
+        city9    = L.marker(city9Coords).bindPopup('This is Golden, CO.'),
+        city10    = L.marker(city10Coords).bindPopup('This is Golden, CO.');
+    
+    let cities = L.layerGroup([city1, city2, city3, city4, city5, city6, city7, city8, city9, city10]);
 
     //Initialises the map
     const map = L.map('map', {layers: [satellite, cities]}).setView([lat, lng], 3);
@@ -69,7 +92,5 @@ const loadMap = (lat, lng, countryName) => {
                 return borders.features[i];
             } 
         }
-    }
-
-    
+    } 
 }
