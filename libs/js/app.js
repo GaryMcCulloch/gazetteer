@@ -158,8 +158,27 @@ function getPark(lat, lng, countryCode, countryName, cityResult) {
         },
         success: function(result) {
             let parkResult = result.results;
-            console.log(parkResult)
-            loadMap(lat, lng, countryCode, countryName, cityResult, parkResult);
+            getBeach(lat, lng, countryCode, countryName, cityResult, parkResult);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('nope');
+        }
+    })
+}
+
+//Get park Information
+function getBeach(lat, lng, countryCode, countryName, parkResult, cityResult) {
+    $.ajax({
+        url: "libs/php/beach.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            countryCode: countryCode
+        },
+        success: function(result) {
+            let beachResult = result.results;
+            console.log(beachResult)
+            loadMap(lat, lng, countryCode, countryName, cityResult, parkResult, beachResult);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log('nope');
