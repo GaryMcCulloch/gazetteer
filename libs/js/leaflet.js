@@ -6,7 +6,7 @@
 // }
 
 
-const loadMap = (lat, lng,countryCode, countryName, cityResult, parkResult, beachResult) => {
+const loadMap = (lat, lng,countryCode, countryName, cityResult, parkResult, beachResult, poiResult) => {
 
 
     //Tile options for base layers
@@ -94,6 +94,32 @@ const loadMap = (lat, lng,countryCode, countryName, cityResult, parkResult, beac
     
     let beaches = L.layerGroup([beach1, beach2, beach3, beach4, beach5, beach6, beach7, beach8, beach9, beach10]);
 
+    /////////////////////beach data
+    
+    let poi1Coords = [poiResult[0].coordinates.latitude, poiResult[0].coordinates.longitude];
+    let poi2Coords = [poiResult[1].coordinates.latitude, poiResult[1].coordinates.longitude];
+    let poi3Coords = [poiResult[2].coordinates.latitude, poiResult[2].coordinates.longitude];
+    let poi4Coords = [poiResult[3].coordinates.latitude, poiResult[3].coordinates.longitude];
+    let poi5Coords = [poiResult[4].coordinates.latitude, poiResult[4].coordinates.longitude];
+    let poi6Coords = [poiResult[5].coordinates.latitude, poiResult[5].coordinates.longitude];
+    let poi7Coords = [poiResult[6].coordinates.latitude, poiResult[6].coordinates.longitude];
+    let poi8Coords = [poiResult[7].coordinates.latitude, poiResult[7].coordinates.longitude];
+    let poi9Coords = [poiResult[8].coordinates.latitude, poiResult[8].coordinates.longitude];
+    let poi10Coords = [poiResult[9].coordinates.latitude, poiResult[9].coordinates.longitude];
+    
+    let poi1 = L.marker(poi1Coords).bindPopup('This is Littleton, CO.'),
+        poi2    = L.marker(poi2Coords).bindPopup('This is Denver, CO.'),
+        poi3    = L.marker(poi3Coords).bindPopup('This is Aurora, CO.'),
+        poi4    = L.marker(poi4Coords).bindPopup('This is Golden, CO.'),
+        poi5    = L.marker(poi5Coords).bindPopup('This is Golden, CO.'),
+        poi6    = L.marker(poi6Coords).bindPopup('This is Golden, CO.'),
+        poi7   = L.marker(poi7Coords).bindPopup('This is Golden, CO.'),
+        poi8   = L.marker(poi8Coords).bindPopup('This is Golden, CO.'),
+        poi9    = L.marker(poi9Coords).bindPopup('This is Golden, CO.'),
+        poi10   = L.marker(poi10Coords).bindPopup('This is Golden, CO.');
+    
+    let pois = L.layerGroup([poi1, poi2, poi3, poi4, poi5, poi6, poi7, poi8, poi9, poi10]);
+
     //Initialises the map
     const map = L.map('map', {layers: [satellite, cities, parks, beaches]}).setView([lat, lng], 3);
 
@@ -105,7 +131,8 @@ const loadMap = (lat, lng,countryCode, countryName, cityResult, parkResult, beac
     let overlayMaps = {
         "Cities": cities,
         "Parks": parks,
-        "Beaches": beaches
+        "Beaches": beaches,
+        "Place of Interest": pois
     };
     
     // Create additional Control placeholders

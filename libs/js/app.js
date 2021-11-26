@@ -51,8 +51,8 @@ function countryCodeSearch(lat, lng) {
         },
         success: function(result) {
             let countryName = result.data.countryName;
-            let countryCode = result.data.countryCode;
-            if (countryCode == 'GB') {
+            let countryCode = result.data.countryCode.toLowerCase();
+            if (countryCode == 'gb') {
                 countryCode = 'uk';
             }
             countryInfo(lat, lng, countryCode, countryName);
@@ -177,8 +177,27 @@ function getBeach(lat, lng, countryCode, countryName, parkResult, cityResult) {
         },
         success: function(result) {
             let beachResult = result.results;
-            console.log(beachResult)
-            loadMap(lat, lng, countryCode, countryName, cityResult, parkResult, beachResult);
+            getPoi(lat, lng, countryCode, countryName, parkResult, cityResult, beachResult);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('nope');
+            console.log(countryCode)
+        }
+    })
+}
+
+//Get poi Information
+function getPoi(lat, lng, countryCode, countryName, parkResult, cityResult, beachResult) {
+    $.ajax({
+        url: "libs/php/poi.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            countryCode: countryCode
+        },
+        success: function(result) {
+            let poiResult = result.results;
+            loadMap(lat, lng, countryCode, countryName, parkResult, cityResult, beachResult, poiResult);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log('nope');
