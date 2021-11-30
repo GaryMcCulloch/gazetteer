@@ -17,29 +17,8 @@
     <title>Gazetteer</title>
 </head>
 <body>
-  <div class="wrapperRel">
-    <div class="countryInfo">
-      <h1 id="countryName"></h1>
-      <ul>
-        <li id="capital"></li>
-        <li id="continent"></li>
-        <li id="population"></li>
-        <li id="currencyCode"></li>
-        <li id="area"></li>
-      </ul>
-      <ul>
-        <li id="time"></li>
-        <li id="sunrise"></li>
-        <li id="sunset"></li>
-        <li id="icon"></li>
-        <li id="description"></li>
-        <li id="temp"></li>
-        <li id="windSpeed"></li>
-      </ul>
-    </div>
-  </div>
 
-  <nav id="mainNav" class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary custom-nav">
     <a class="navbar-brand" href="#">Gazetteer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -68,15 +47,67 @@
           <a class="nav-link disabled" href="#">Disabled</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <select id="countrySelect" class="form-select" aria-label="Default select example">
+        <option select>Choose a country</option>
+      </select>
     </div>
   </nav>
+
+  <div class="containerx">
+    <div class="countryInfo">
+      <div class="countryHeader sidebarSection">
+        <h1 id="countryName"></h1>
+      </div>
+      <div class="demographics sidebarSection">
+        <h2 class="sectionHeader">Country Bio</h2>
+        <ul>
+          <li class="listItem">Capital City: <span class="test" id="capital"></span></li>
+          <li class="listItem">Continent: <span class="test" id="continent"></span></li>
+          <li class="listItem">Population: <span class="test" id="population"></span></li>
+          <li class="listItem">Currency: <span class="test" id="currencyCode"></span></li>
+          <li class="listItem">Area (km<sup>2</sup>): <span class="test" id="area"></span></li>
+        </ul>
+      </div>
+      <div class="weather sidebarSection">
+        <h2 class="sectionHeader">Weather</h2>
+        <ul>
+          <li class="listItem" id="time">Capital City: <span class="test" id="capital"></span></li>
+          <li class="listItem" id="sunrise">Capital City: <span class="test" id="capital"></span></li>
+          <li class="listItem" id="sunset">Capital City: <span class="test" id="capital"></span></li>
+          <!-- <li class="listItem" id="icon">Capital City: <span class="test" id="capital"></span></li> -->
+          <li class="listItem" id="description">Capital City: <span class="test" id="capital"></span></li>
+          <li class="listItem" id="temp">Capital City: <span class="test" id="capital"></span></li>
+          <li class="listItem" id="windSpeed">Capital City: <span class="test" id="capital"></span></li>
+        </ul>
+      </div>
+
+      <div class="sidebarSection">
+          <h2 class="sectionHeader">Currency Converter</h2>
+          <div class="currencyInput">
+            <input type="number" class="form-input" id="number" placeholder="0">
+            <select name="currency" class="currency" onchange="updateValue()"></select>
+          </div>
+          <div class="currencyOutput">
+            <input type="text" class="form-input" id="currencyOutput" placeholder="0" disabled>
+            <select name="currency" class="currency" onchange="updateValue()"></select>
+          </div>
+      </div>
+
+      <div class="sidebarSection">
+        <h2 class="sectionHeader">Wikipedia Articles</h2>
+        <input id="input">
+        <button onclick="wikiSearch(document.querySelector('#input').value)">
+          Search
+        </button>
+        <div id="output"></div>
+      </div>
+    </div>
+  </div>
   <div id="map"></div>
 
 
+
+  <script type='text/javascript' src='./libs/js/jquery-3.6.0.min.js'></script>
     <!-- GeoJSON Data -->
     <script type='text/javascript' src='./libs/js/assets/geoJson.js'></script>
 
@@ -91,7 +122,6 @@
     <script src='./libs/js/leaflet.js'></script>
     <script src='./libs/js/app.js'></script>
         <!-- Bootstrap -->
-        <script type='text/javascript' src='./libs/js/jquery-3.6.0.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>

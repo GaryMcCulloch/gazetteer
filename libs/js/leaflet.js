@@ -121,7 +121,7 @@ const loadMap = (lat, lng,countryCode, countryName, cityResult, parkResult, beac
     let pois = L.layerGroup([poi1, poi2, poi3, poi4, poi5, poi6, poi7, poi8, poi9, poi10]);
 
     //Initialises the map
-    const map = L.map('map', {layers: [satellite, cities, parks, beaches]}).setView([lat, lng], 3);
+    const map = L.map('map', {layers: [satellite]}).setView([lat, lng], 3);
 
     let baseMaps = {
         "Satellite": satellite,

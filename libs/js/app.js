@@ -1,3 +1,9 @@
+$('#countrySelect').on('change', function() {
+    alert( this.value );
+    showPosition()
+  });
+
+
 //Run scripts when page is loaded
 document.addEventListener('DOMContentLoaded', () => {
     if (navigator.geolocation) {
@@ -7,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Get user location
 const showPosition = (position) => {
-
+    
     let lat = position.coords.latitude;
     let lng = position.coords.longitude;
 
@@ -22,21 +28,130 @@ const showPosition = (position) => {
 
 
     countryCodeSearch(lat, lng);
-    
-    // getCity();
 }
 
 // User location error
 const showError = (error) => {
     if(error.PERMISSION_DENIED){
         alert("The User have denied the request for Geolocation.");
+        let lat = 55;
+        let lng = -4;
+        // countryCodeSearch(lat, lng);
     }
+}
+
+
+
+//currency converter
+const select = document.querySelectorAll('.currency');
+const number = document.getElementById('number');
+const output = document.getElementById('currencyOutput');
+
+fetch('https://api.frankfurter.app/currencies').then((data) => data.json())
+.then((data) => {
+    display(data);
+});
+
+function display(data) {
+    const entries = Object.entries(data);
+    for (let i = 0; i < entries.length; i++) {
+        select[0].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]} : ${entries[i][1]}</option>`;
+        select[1].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]} : ${entries[i][1]}</option>`;
+    }
+}
+
+function updateValue() {
+    let currency1 = select[0].value;
+    let currency2 = select[1].value;
+
+    let value = number.value;
+
+    if(currency1 != currency2) {
+        convert(currency1, currency2, value);
+    } else {
+        alert("Choose different currencies");
+    }
+}
+
+function convert(currency1, currency2, value) {
+    const host = "api.frankfurter.app";
+
+    fetch(`https://${host}/latest?amount=${value}&from=${currency1}&to=${currency2}`)
+    .then((val) => val.json())
+    .then((val) => {
+        console.log(Object.values(val.rates)[0]);
+        output.value = Object.values(val.rates)[0];
+    });
+}
+
+
+function wikiSearch(countryName) {
+    let ids = "";
+    let links = [];
+    let results = [];
+
+    fetch("https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=" + countryName)
+    .then(response =>{
+        return response.json();
+    })
+    .then(result => {
+        results = result.query.search;
+        for(var i = 0; i < results.length; i++) {
+            if (results[i+1] != null) {
+                ids += results[i].pageid + "|";
+            } else {
+                ids += results[i].pageid;
+            }
+        }
+    })
+    .then(a => {
+        fetch("https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&origin=*&format=json&pageids=" + ids)
+        .then(idresult => {
+            return idresult.json();
+        })
+        .then(idresult => {
+            for (i in idresult.query.pages) {
+                links.push(idresult.query.pages[i].fullurl);
+            }
+        })
+        .then(g => {
+            document.getElementById("output").innerHTML="";
+            for(let i = 0; i < results.length; i++){
+                if (i < 3) {
+                    document.getElementById("output").innerHTML += "<br><br><a href='" + links[i] + "'target='_blank'>" + results[i].title + "</a><br>" + results[i].snippet + "... Click title to read full article.";
+                }
+            }
+        });
+    });
 }
 
 
 ///////////////////////////////////////////////////////////////AJAX////////////////////////////////////////////////////////////////////////////////
 
 
+//Select option
+function selectOption() {
+    $.ajax({
+        url: "libs/php/getAllCountries.php",
+        type: "POST",
+        dataType: 'json',
+        timeout: 5000,
+        success: function(result) {
+            // console.log(result);
+            const options = [];
+            for (i = 0; i < result.data.length; i++) {
+                options.push(result.data[i].countryName);
+            }
+            options.forEach(country => {
+                $('#countrySelect').append($(`<option value='${country}'>${country}</option>`));
+        }
+            )
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('nope');
+        }
+    });
+}
 
 //Find user country
 function countryCodeSearch(lat, lng) {
@@ -55,6 +170,9 @@ function countryCodeSearch(lat, lng) {
             if (countryCode == 'gb') {
                 countryCode = 'uk';
             }
+            // getWikiLinks(countryName);
+            selectOption();
+            wikiSearch(countryName);
             countryInfo(lat, lng, countryCode, countryName);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -76,12 +194,13 @@ function countryInfo(lat, lng, countryCode, countryName) {
 
             if (result.status.name == "ok") {
 
-                $('#continent').html('Continent:   ' + result['data'][0]['continentName']);
-                $('#capital').html('Capital City:   ' + result['data'][0]['capital']);
+                $('#continent').html(result['data'][0]['continentName']);
+                $('#capital').html(result['data'][0]['capital']);
                 $('#countryName').html(result['data'][0]['countryName']);
-                $('#population').html('Population:   ' + result['data'][0]['population']);
-                $('#currencyCode').html('Currency:   ' + result['data'][0]['currencyCode']);
-                $('#area').html('Country Size:   ' + result['data'][0]['areaInSqKm']);
+                $('#population').html(result['data'][0]['population']);
+                $('#currencyCode').html(result['data'][0]['currencyCode']);
+                $('#area').html(result['data'][0]['areaInSqKm']);
+
                 getWeather(lat, lng, countryCode, countryName);
             }
         
