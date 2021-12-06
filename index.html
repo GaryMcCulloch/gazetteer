@@ -20,27 +20,15 @@
     <title>Gazetteer</title>
 </head>
 <body>
-
-  <!-- <nav id="nav" class="navbar navbar-expand-md navbar-dark bg-primary custom-nav">
-    <a id="logo" class="navbar-brand ms-5 logo" href="#">Gazetteer</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
-      <select id="countrySelect" class="form-select me-5" aria-label="Default select example">
-        <option selected>Choose a Country...</option>
-      </select>
-    </div>
-  </nav>  -->
-
+  <nav id="topNav">
+    <a href="#" class="logo">Gazetteer</a>
+    <select id="countrySelect" class="form-select" aria-label="Default select example">
+      <option selected>Choose a Country...</option>
+    </select>
+  </nav>
 
   <div class="containerx" id="containerx">
-    <div class="header">
-      <a id="logo" href="#">Gazetteer</a>
-      <select id="countrySelect">
-        <option selected>Choose a Country...</option>
-      </select>
-    </div>
+    <span id="exit">&times;</span>
     <div class="countryInfo">
       <div class="countryHeader">
         <h1 id="countryName"></h1>
@@ -57,8 +45,8 @@
       <div class="weather sidebarSection">
         <h2 id="exactLocation" class="sectionHeader"></h2>
         <div class="weatherContainer">
-          <div class="iconContainer">
-            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+          <div id="icon">
+            <img id="wicon" src="" alt="Weather icon" class="w-icon">
           </div>
           <div class="weatherStats">
             <div id="temp"></div>
@@ -96,31 +84,33 @@
   </div>
   <div id="map"></div>
 
-
+  <!-- env variables -->
+  <script type='text/javascript' src='./libs/js/config.js'></script>
 
   <script type='text/javascript' src='./libs/js/jquery-3.6.0.min.js'></script>
-    <!-- GeoJSON Data -->
-    <script type='text/javascript' src='./libs/js/assets/geoJson.js'></script>
+  
+  <!-- GeoJSON Data -->
+  <script type='text/javascript' src='./libs/js/assets/geoJson.js'></script>
 
-    <!-- LeafletJs -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""
-    >
-    </script>
+  <!-- LeafletJs -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+  >
+  </script>
 
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <!-- Awesome-markers -->
-    <script src="./libs/icons/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+  <!-- Awesome-markers -->
+  <script src="./libs/icons/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
 
-    <!-- My Scripts   -->
-    <script src='./libs/js/leaflet.js'></script>
-    <script src='./libs/js/ajax.js'></script>
-    <script src='./libs/js/wikisearch.js'></script>
-    <script src='./libs/js/currencyConverter.js'></script>
-    <script src='./libs/js/app.js'></script>
+  <!-- My Scripts   -->
+  <script src='./libs/js/leaflet.js'></script>
+  <script src='./libs/js/ajax.js'></script>
+  <script src='./libs/js/wikisearch.js'></script>
+  <script src='./libs/js/currencyConverter.js'></script>
+  <script src='./libs/js/app.js'></script>
     
 </body>
 </html>

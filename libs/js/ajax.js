@@ -19,7 +19,9 @@ function selectOption() {
             )
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('nope');
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)
         }
     });
 }
@@ -41,7 +43,9 @@ function countryCodeSearch() {
             getCountryData();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('nope');
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)
         }
     });
 }
@@ -73,7 +77,9 @@ function countryInfo() {
         
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // your error code
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)
         }
     });
 }
@@ -89,31 +95,39 @@ function getWeather() {
             lng: coords[1].longitude
         },
         success: function(result) {
-
             if (result.status.name == "ok") {
 
                 //Convert Unix timestamps
                 let formattedTime = new Date(result.current.dt * 1000).toLocaleTimeString("en-GB");
                 let formattedSunrise = new Date(result.current.sunrise * 1000).toLocaleTimeString("en-GB");
                 let formattedSunset = new Date((result.current.sunset * 1000) + (10800 * 1000)).toLocaleTimeString("en-GB");
+
+                let capString = result['current']['weather'][0]['description'];
+                capString = capString.replace(/\b\w/g, l => l.toUpperCase());
+
             
                 $('#time').html(formattedTime);
                 $('#sunrise').html(formattedSunrise);
                 $('#sunset').html(formattedSunset);
                 // $('#icon').html('Icon: ' + result['current']['weather'][0]['icon']);  create background weather image related to weather description
-                $('#description').html(result['current']['weather'][0]['description']);
+                $('#description').html(capString);
                 $('#temp').html(result['current']['temp'] + ' °C ');
                 $('#windSpeed').html(result['current']['wind_speed'] + ' kph');
+
+                let iconCode = result.current.weather[0].icon;
+                let iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                $('#wicon').attr('src', iconUrl);
 
                 getLocation();
             }
         },
 
         error: function(jqXHR, textStatus, errorThrown) {
-            // your error code
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)
         }
     });
-    // getCity(lat, lng, countryCode, countryName);
 }
 
 //Get weather Information
@@ -132,7 +146,6 @@ function getLocation() {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('error @ getLocation')
             console.log(jqXHR)
             console.log(textStatus)
             console.log(errorThrown)
@@ -151,22 +164,26 @@ function getCity() {
         type: 'POST',
         dataType: 'json',
         data: {
-            countryCode: countryCode
+            countryCode: countryCode,
+            account: config.triposo_account,
+            token: config.triposo_token
         },
         success: function(result) {
             let cityResult = result.results;
             for (i = 0; i < cityResult.length; i++) {
                 let lat = cityResult[i].coordinates.latitude;
                 let lng = cityResult[i].coordinates.longitude;
+                let desc = cityResult[i].name;
+                let snippet = cityResult[i].snippet;
                 let latlng = [lat, lng];
-                let cityMarker = L.marker(latlng, {icon: cityMarkerIcon});
+                let cityMarker = L.marker(latlng, {icon: cityMarkerIcon}).bindPopup(desc + '<hr>' + snippet);
                 cityMarker.addTo(cityLayer);
             }
-            // console.log(cityLayerGroup)
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('nope');
-        }
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)        }
     })
 }
 
@@ -181,7 +198,9 @@ function getPark() {
         type: 'POST',
         dataType: 'json',
         data: {
-            countryCode: countryCode
+            countryCode: countryCode,
+            account: config.triposo_account,
+            token: config.triposo_token
         },
         success: function(result) {
             let parkResult = result.results;
@@ -189,12 +208,16 @@ function getPark() {
                 let lat = parkResult[i].coordinates.latitude;
                 let lng = parkResult[i].coordinates.longitude;
                 let latlng = [lat, lng];
-                let parkMarker = L.marker(latlng, {icon: parkMarkerIcon});
+                let desc = parkResult[i].name;
+                let snippet = parkResult[i].snippet;
+                let parkMarker = L.marker(latlng, {icon: parkMarkerIcon}).bindPopup(desc + '<hr>' + snippet);
                 parkMarker.addTo(parkLayer);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)
         }
     })
 }
@@ -210,7 +233,9 @@ function getBeach() {
         type: 'POST',
         dataType: 'json',
         data: {
-            countryCode: countryCode
+            countryCode: countryCode,
+            account: config.triposo_account,
+            token: config.triposo_token
         },
         success: function(result) {
             let beachResult = result.results;
@@ -218,7 +243,8 @@ function getBeach() {
                 let lat = beachResult[i].coordinates.latitude;
                 let lng = beachResult[i].coordinates.longitude;
                 let latlng = [lat, lng];
-                let beachMarker = L.marker(latlng, {icon: beachMarkerIcon});
+                let desc = beachResult[i].name;
+                let beachMarker = L.marker(latlng, {icon: beachMarkerIcon}).bindPopup(desc);
                 beachMarker.addTo(beachLayer);
             }
         },
@@ -241,7 +267,9 @@ function getPoi() {
         type: 'POST',
         dataType: 'json',
         data: {
-            countryCode: countryCode
+            countryCode: countryCode,
+            account: config.triposo_account,
+            token: config.triposo_token
         },
         success: function(result) {
             let poiResult = result.results;
@@ -249,12 +277,16 @@ function getPoi() {
                 let lat = poiResult[i].coordinates.latitude;
                 let lng = poiResult[i].coordinates.longitude;
                 let latlng = [lat, lng];
-                let poiMarker = L.marker(latlng, {icon: poiMarkerIcon});
+                let desc = poiResult[i].name;
+                let snippet = poiResult[i].snippet;
+                let poiMarker = L.marker(latlng, {icon: poiMarkerIcon}).bindPopup(desc);
                 poiMarker.addTo(poiLayer);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('nope');
+            console.log(jqXHR)
+            console.log(textStatus)
+            console.log(errorThrown)
         }
     })
 }

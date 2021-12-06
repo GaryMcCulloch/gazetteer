@@ -15,44 +15,71 @@ body {
 }
 
 #map {
-  height: 100vh;
+  position: absolute;
+  top: 70px;
+  height: calc(100vh - 70px);
   width: 100vw;
+}
+
+/* #nav {
+  height: 5vh;
+} */
+#topNav {
+  width: 100%;
+  height: 70px;
+  background: dodgerblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  z-index: 99999;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+}
+.navbar-brand {
+  font-size: 2rem;
+}
+
+#countrySelect {
+  width: 600px;
+  height: 2.5rem;
+  /* border: none;
+  box-shadow: none; */
+  border-radius: 10px;
+  /* padding: 1rem; */
+  padding-top: 4px;
 }
 
 .dem {
   padding-left: 0;
 }
 
-.infoBtn {
-  position: absolute;
-  top: 9%;
-  left: 0;
-  background: rgb(1, 24, 58);
-  color: #fff;
-  padding: 1rem 2rem;
-  z-index: 99999;
-  border: solid 1px dodgerblue;
-  border-left: none;
-  border-radius: 0 10px 10px 0;
-}
-
 .containerx {
   position: absolute;
-  top: 0;
+  top: 70px;
   left: 0%;
   width: 400px;
-  height: 100vh;
+  height: calc(100vh - 70px);
   background: rgb(1, 24, 58);
   z-index: 1000;
   color: rgb(255, 255, 255);
   overflow-y: scroll;
   font-size: 1.2rem;
-  /* transform: translateX(-100%); */
+  transition: all 0.5s;
+  -webkit-transition: all 0.25s;
 }
 
-#logo {
+#exit {
+  position: absolute;
+  top: 0;
+  right: 20px;
   font-size: 3rem;
-  padding: 2rem 0;
+  color: rgb(0, 123, 255);
+  cursor: pointer;
 }
 
 .header {
@@ -150,16 +177,6 @@ body {
   box-shadow: none;
 }
 
-.navbar-brand {
-  font-size: 2rem;
-}
-
-.navbar {
-  /* height: 5vh; */
-  z-index: 99999;
-  display: none;
-}
-
 #wikiBtn {
   background: rgb(0, 123, 255);
   border: solid 1px #fff;
@@ -169,24 +186,12 @@ body {
   border-radius: 10px;
 }
 
-#countrySelect {
-  width: 90%;
-  height: 2rem;
-  /* border: none;
-  box-shadow: none; */
-  border-radius: 10px;
-}
-
-/* .logo {
-  font-style: 30rem;
-} */
-
 /* Positioning for leaflet controls */
 .leaflet-verticalcenter {
   position: absolute;
   z-index: 1000;
   pointer-events: none;
-  top: 10%;
+  top: 80px;
   transform: translateY(-50%);
   padding-top: 10px;
 }
@@ -208,4 +213,25 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgb(254, 255, 255);
+}
+
+@media only screen and (max-width: 1000px) {
+  .containerx {
+    transform: translateX(-100%);
+  }
+  #countrySelect {
+    width: 400px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #countrySelect {
+    width: 200px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .logo {
+    font-size: 1.5rem;
+  }
 }

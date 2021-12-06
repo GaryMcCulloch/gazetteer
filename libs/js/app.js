@@ -3,6 +3,7 @@ let cityArray = [];
 
 //Run scripts when page is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    selectOption();
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     }
@@ -17,14 +18,13 @@ const showPosition = (position) => {
     coords.push({latitude: lat})
     coords.push({longitude: lng})
 
-    selectOption();
     countryCodeSearch();
 }
 
 // User location error
 const showError = (error) => {
     if(error.PERMISSION_DENIED){
-        alert("The User has denied the request for Geolocation.");
+        alert("The User has denied the request for Geolocation. Please pick a country to continue.");
     }
 }
 
@@ -60,11 +60,11 @@ $('#countrySelect').on('change', function() {
             resetUserLocation(); 
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // console.log('nope');
             console.log(jqXHR)
             console.log(textStatus)
             console.log(errorThrown)
         }
     })
   });
+
 

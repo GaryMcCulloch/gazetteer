@@ -12,6 +12,7 @@ let userMarker;
 let countryBorder;
 let layerControl;
 
+let userGroup = L.layerGroup([]);
 let cityLayer = L.layerGroup([]);
 let beachLayer = L.layerGroup([]);
 let parkLayer = L.layerGroup([]);
@@ -63,19 +64,6 @@ let mapStyle1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
-// Add markers to map
-// Font-Awesome markers
-// L.marker([51.927913,4.521303], {icon: L.AwesomeMarkers.icon({icon: 'coffee', markerColor: 'darkred', prefix: 'fa', iconColor: 'black'}) }).addTo(map);
-
-// var restaurantMarker = L.AwesomeMarkers.icon({
-// icon: 'coffee', 
-// markerColor: 'red',
-// prefix: 'fa', 
-// iconColor: 'blue'
-// });
-
-// L.marker([51.955556, 4.520278], {icon: restaurantMarker}).addTo(map).bindPopup('Aumeister');
-
 map.addLayer(mapStyle1);
 
 //Creates control placement functionality
@@ -89,9 +77,11 @@ function loadLayers(){
     let lat = coords[0].latitude;
     let lng = coords[1].longitude;
 
-    userMarker = L.marker([lat,lng], {icon: userMarkerIcon});
-    let userGroup = L.layerGroup([userMarker]);
-    userGroup.addTo(map);
+    if (!userMarker) {
+        userMarker = L.marker([lat,lng], {icon: userMarkerIcon});
+        userMarker.addTo(userGroup);
+        userGroup.addTo(map);
+    }
 
     //Creates base layers object to be added to controls
     let baseMaps = {
@@ -123,32 +113,10 @@ function resetUserLocation() {
     map.removeLayer(countryBorder);
     map.removeLayer(userMarker);
     cityLayer = L.layerGroup([]); 
+    beachLayer = L.layerGroup([]); 
+    parkLayer = L.layerGroup([]); 
+    poiLayer = L.layerGroup([]); 
 }
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function findBorders(borders, countryName){
     for(let i = 0; i < borders.features.length; i++){

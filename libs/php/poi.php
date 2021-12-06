@@ -8,7 +8,7 @@
 	$executionStartTime = microtime(true);
 
 
-	$url='https://www.triposo.com/api/20211011/poi.json?countrycode=' . $_REQUEST['countryCode'] . '&tag_labels=sightseeing&count=10&fields=id,name,score,intro,tag_labels,location_id,location_ids,coordinates&order_by=-score&account=C8JYDHAY&token=qms8ofeum9yxr4iebaasuvpw20d0gwe3';
+	$url='https://www.triposo.com/api/20211011/poi.json?countrycode=' . $_REQUEST['countryCode'] . '&tag_labels=sightseeing&count=10&fields=id,name,score,intro,tag_labels,location_id,location_ids,coordinates&order_by=-score&account=' . $_REQUEST['account'] . '&token=' . $_REQUEST['token'];
 	
 	// Curl object is initiated
 	$ch = curl_init();
