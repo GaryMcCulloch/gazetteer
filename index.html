@@ -5,62 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./libs/css/style.css">
+    <link rel="stylesheet" href="./libs/icons/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""
     />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/b616ef5313.js" crossorigin="anonymous"></script>
 
 
     <title>Gazetteer</title>
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary custom-nav">
-    <a class="navbar-brand" href="#">Gazetteer</a>
+  <!-- <nav id="nav" class="navbar navbar-expand-md navbar-dark bg-primary custom-nav">
+    <a id="logo" class="navbar-brand ms-5 logo" href="#">Gazetteer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-      <select id="countrySelect" class="form-select" aria-label="Default select example">
-        <option select>Choose a country</option>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+      <select id="countrySelect" class="form-select me-5" aria-label="Default select example">
+        <option selected>Choose a Country...</option>
       </select>
     </div>
-  </nav>
+  </nav>  -->
 
-  <div class="containerx">
+
+  <div class="containerx" id="containerx">
+    <div class="header">
+      <a id="logo" href="#">Gazetteer</a>
+      <select id="countrySelect">
+        <option selected>Choose a Country...</option>
+      </select>
+    </div>
     <div class="countryInfo">
-      <div class="countryHeader sidebarSection">
+      <div class="countryHeader">
         <h1 id="countryName"></h1>
       </div>
       <div class="demographics sidebarSection">
-        <h2 class="sectionHeader">Country Bio</h2>
-        <ul>
+        <ul class="dem">
           <li class="listItem">Capital City: <span class="test" id="capital"></span></li>
           <li class="listItem">Continent: <span class="test" id="continent"></span></li>
           <li class="listItem">Population: <span class="test" id="population"></span></li>
@@ -69,26 +55,31 @@
         </ul>
       </div>
       <div class="weather sidebarSection">
-        <h2 class="sectionHeader">Weather</h2>
-        <ul>
-          <li class="listItem" id="time">Capital City: <span class="test" id="capital"></span></li>
-          <li class="listItem" id="sunrise">Capital City: <span class="test" id="capital"></span></li>
-          <li class="listItem" id="sunset">Capital City: <span class="test" id="capital"></span></li>
-          <!-- <li class="listItem" id="icon">Capital City: <span class="test" id="capital"></span></li> -->
-          <li class="listItem" id="description">Capital City: <span class="test" id="capital"></span></li>
-          <li class="listItem" id="temp">Capital City: <span class="test" id="capital"></span></li>
-          <li class="listItem" id="windSpeed">Capital City: <span class="test" id="capital"></span></li>
+        <h2 id="exactLocation" class="sectionHeader"></h2>
+        <div class="weatherContainer">
+          <div class="iconContainer">
+            <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" class="w-icon">
+          </div>
+          <div class="weatherStats">
+            <div id="temp"></div>
+            <div id="description"></div>
+          </div>
+        </div>  
+        <ul class="dem">
+          <li class="listItem">Time of Sunrise: <span class="test" id="sunrise"></span></li>
+          <li class="listItem">Time of Sunset: <span class="test" id="sunset"></span></li>
+          <li class="listItem">Wind Speed: <span class="test" id="windSpeed"></span></li>
         </ul>
       </div>
 
       <div class="sidebarSection">
           <h2 class="sectionHeader">Currency Converter</h2>
           <div class="currencyInput">
-            <input type="number" class="form-input" id="number" placeholder="0">
+            <input type="number" class="form-input" id="number" placeholder="Select Amount">
             <select name="currency" class="currency" onchange="updateValue()"></select>
           </div>
           <div class="currencyOutput">
-            <input type="text" class="form-input" id="currencyOutput" placeholder="0" disabled>
+            <input id="currencyOutput" type="text" class="form-input" id="currencyOutput" placeholder="0" disabled>
             <select name="currency" class="currency" onchange="updateValue()"></select>
           </div>
       </div>
@@ -96,7 +87,7 @@
       <div class="sidebarSection">
         <h2 class="sectionHeader">Wikipedia Articles</h2>
         <input id="input">
-        <button onclick="wikiSearch(document.querySelector('#input').value)">
+        <button id="wikiBtn" onclick="wikiSearch(document.querySelector('#input').value)">
           Search
         </button>
         <div id="output"></div>
@@ -118,11 +109,18 @@
     >
     </script>
 
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Awesome-markers -->
+    <script src="./libs/icons/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+
     <!-- My Scripts   -->
     <script src='./libs/js/leaflet.js'></script>
+    <script src='./libs/js/ajax.js'></script>
+    <script src='./libs/js/wikisearch.js'></script>
+    <script src='./libs/js/currencyConverter.js'></script>
     <script src='./libs/js/app.js'></script>
-        <!-- Bootstrap -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
 </body>
 </html>

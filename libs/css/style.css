@@ -1,8 +1,11 @@
 * {
   padding: 0;
   margin: 0;
-  text-decoration: none;
+  text-decoration: none !important;
   list-style-type: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
 html,
@@ -12,28 +15,57 @@ body {
 }
 
 #map {
-  position: absolute;
-  top: 5vh;
-  left: 0;
-  height: 95vh;
+  height: 100vh;
   width: 100vw;
 }
 
-.custom-nav {
-  height: 5vh;
-  padding: 0;
+.dem {
+  padding-left: 0;
+}
+
+.infoBtn {
+  position: absolute;
+  top: 9%;
+  left: 0;
+  background: rgb(1, 24, 58);
+  color: #fff;
+  padding: 1rem 2rem;
+  z-index: 99999;
+  border: solid 1px dodgerblue;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
 }
 
 .containerx {
   position: absolute;
-  top: 5vh;
+  top: 0;
   left: 0%;
   width: 400px;
-  height: 95vh;
-  background: rgba(175, 212, 252, 0.9);
+  height: 100vh;
+  background: rgb(1, 24, 58);
   z-index: 1000;
-  color: #000;
+  color: rgb(255, 255, 255);
   overflow-y: scroll;
+  font-size: 1.2rem;
+  /* transform: translateX(-100%); */
+}
+
+#logo {
+  font-size: 3rem;
+  padding: 2rem 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.countryHeader {
+  padding: 4rem 0 4rem 0;
+  width: 80%;
+  border-bottom: solid 1px rgb(0, 123, 255);
 }
 .countryInfo {
   display: flex;
@@ -52,7 +84,7 @@ body {
 }
 
 .sectionHeader {
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding-bottom: 1rem;
 }
 
@@ -65,26 +97,97 @@ body {
   font-weight: 300;
 }
 
-h1 {
+#countryName {
   /* padding: 5rem 0 1.5rem 0; */
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+}
+
+.weatherContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.weatherStats {
+  text-align: left;
+  border-left: solid 1px rgb(0, 123, 255);
+  padding-left: 1.5rem;
 }
 
 #output .article {
   margin-top: 2rem;
 }
 
-#countrySelect {
+.form-input {
   width: 10rem;
-  color: black;
+  height: 2rem;
+  border: solid 1px rgb(0, 123, 255);
+  border-radius: 10px;
+  box-shadow: none;
+  text-align: center;
 }
+
+#currencyOutput {
+  color: white;
+}
+
+.currency {
+  width: 4rem;
+  height: 2rem;
+  border: solid 1px rgb(0, 123, 255);
+  border-radius: 10px;
+  box-shadow: none;
+}
+.currencyInput {
+  padding: 2rem 0 2rem 0;
+}
+
+#input {
+  border: solid 1px rgb(0, 123, 255);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+}
+
+.navbar {
+  /* height: 5vh; */
+  z-index: 99999;
+  display: none;
+}
+
+#wikiBtn {
+  background: rgb(0, 123, 255);
+  border: solid 1px #fff;
+  box-shadow: none;
+  color: #fff;
+  padding: 0 0.5rem;
+  border-radius: 10px;
+}
+
+#countrySelect {
+  width: 90%;
+  height: 2rem;
+  /* border: none;
+  box-shadow: none; */
+  border-radius: 10px;
+}
+
+/* .logo {
+  font-style: 30rem;
+} */
 
 /* Positioning for leaflet controls */
 .leaflet-verticalcenter {
   position: absolute;
   z-index: 1000;
   pointer-events: none;
-  top: 50%; /* possible because the placeholder's parent is the map */
-  transform: translateY(-50%); /* using the CSS3 Transform technique */
+  top: 10%;
+  transform: translateY(-50%);
   padding-top: 10px;
 }
 
@@ -99,15 +202,10 @@ h1 {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #373641;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(0, 21, 65);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(0, 0, 138);
+  background: rgb(254, 255, 255);
 }

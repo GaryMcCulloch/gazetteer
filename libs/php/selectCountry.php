@@ -8,9 +8,8 @@
 	$executionStartTime = microtime(true);
 
 
-	// $url='https://api.openweathermap.org/data/2.5/onecall?lat=55.8229916&lon=-4.1823749&appid=01a69c43fa692a1e67ae4c9bdabb8fdc';
-	$url='https://api.openweathermap.org/data/2.5/onecall?lat=' . $_REQUEST['lat'] . '&lon=' . $_REQUEST['lng'] . '&units=metric&appid=01a69c43fa692a1e67ae4c9bdabb8fdc';
-
+	$url='https://www.triposo.com/api/20211011/location.json?countrycode=' . $_REQUEST['selectValue'] . '&tag_labels=city&count=1&fields=id,name,score,snippet,coordinates&order_by=-score&account=C8JYDHAY&token=qms8ofeum9yxr4iebaasuvpw20d0gwe3';
+	// $url='https://www.triposo.com/api/20211011/location.json?countrycode=uk&tag_labels=city&count=10&fields=id,name,score,snippet,coordinates&order_by=-score&account=C8JYDHAY&token=qms8ofeum9yxr4iebaasuvpw20d0gwe3';
 // Curl object is initiated
 	$ch = curl_init();
 	
@@ -29,7 +28,7 @@
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-	$output['current'] = $decode['current'];
+	$output['results'] = $decode['results'];
 	
 	header('Content-Type: application/json; charset=UTF-8');
 
