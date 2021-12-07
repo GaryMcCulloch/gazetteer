@@ -59,13 +59,11 @@ body {
 }
 
 .containerx {
-  position: absolute;
-  top: 70px;
-  left: 0%;
+  position: relative;
   width: 400px;
   height: calc(100vh - 70px);
   background: rgb(1, 24, 58);
-  z-index: 1000;
+  z-index: 99999;
   color: rgb(255, 255, 255);
   overflow-y: scroll;
   font-size: 1.2rem;
@@ -73,13 +71,47 @@ body {
   -webkit-transition: all 0.25s;
 }
 
-#exit {
+.sidebarToggle {
   position: absolute;
   top: 0;
   right: 20px;
+  width: 50px;
+  height: 50px;
+}
+#exit {
   font-size: 3rem;
   color: rgb(0, 123, 255);
   cursor: pointer;
+  z-index: 99999;
+}
+
+#exit:hover {
+  color: greenyellow;
+}
+
+.toggle {
+  transform: translateX(-100%);
+}
+
+.menu {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 90px;
+  left: 20px;
+  background: rgb(1, 24, 58);
+  height: 50px;
+  width: 50px;
+  z-index: 999;
+  color: dodgerblue;
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.menu:hover {
+  color: limegreen;
 }
 
 .header {
@@ -216,9 +248,6 @@ body {
 }
 
 @media only screen and (max-width: 1000px) {
-  .containerx {
-    transform: translateX(-100%);
-  }
   #countrySelect {
     width: 400px;
   }
@@ -233,5 +262,17 @@ body {
 @media only screen and (max-width: 500px) {
   .logo {
     font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .containerx {
+    width: 100%;
+  }
+  #countrySelect {
+    width: 200px;
+  }
+  .logo {
+    font-size: 1.2rem;
   }
 }

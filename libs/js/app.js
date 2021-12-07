@@ -1,5 +1,4 @@
 let coords = [];
-let cityArray = [];
 
 //Run scripts when page is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,4 +66,28 @@ $('#countrySelect').on('change', function() {
     })
   });
 
+$('.sidebarToggle').on('click', function() {
+    $('.containerx').addClass('toggle');
+});
 
+$('.menu').on('click', function() {
+    $('.containerx').removeClass('toggle');
+});
+
+$(window).on('resize', function() {
+    if($(window).width() < 1000) {
+        $('.containerx').addClass('toggle');
+    }
+});
+
+$(window).on('resize', function() {
+    if($(window).width() > 1000) {
+        $('.containerx').removeClass('toggle');
+    }
+});
+
+$(window).on('load', function() {
+    if($(window).width() < 1000) {
+        $('.containerx').addClass('toggle');
+    }
+});
