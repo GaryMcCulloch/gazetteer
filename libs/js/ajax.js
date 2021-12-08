@@ -1,29 +1,20 @@
-//Find all country names and push results to select box
 function selectOption() {
-    $.ajax({
-        url: "libs/php/getAllCountries.php",
-        type: "POST",
-        dataType: 'json',
-        timeout: 5000,
-        success: function(result) {
-            const options = [];
-            for (i = 0; i < result.data.length; i++) {
-                let countryName = result.data[i].countryName;
-                let countryCode = result.data[i].countryCode;
-                options.push({country:countryName, code:countryCode});
-            }
-            // console.log(options);
-            options.forEach(country => {
-                $('#countrySelect').append($(`<option value='${country.code}'>${country.country}</option>`));
-        }
-            )
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR)
-            console.log(textStatus)
-            console.log(errorThrown)
-        }
-    });
+    let options = [];
+    for (let i = 0; i < borders.features.length; i++) {
+        let countryName = borders.features[i].properties.name;
+        let countryCode = borders.features[i].properties.iso_a2;
+        options.push({country: countryName, code: countryCode});
+        // const sortedOptions = options.sort(optionsSort());
+        options.sort(function(x,y) {
+            if (x.country < y.country) return -1;
+            if (x.country > y.country) return 1;
+            return 0;
+          })
+    }
+    options.forEach(country => {
+        $('#countrySelect').append($(`<option value='${country.code}'>${country.country}</option>`));
+    })
+
 }
 
 //Find user countryCode and countryName and push result to global array
@@ -177,7 +168,7 @@ function getCity() {
                 let snippet = cityResult[i].snippet;
                 let latlng = [lat, lng];
                 let cityMarker = L.marker(latlng, {icon: cityMarkerIcon}).bindPopup(desc + '<hr>' + snippet);
-                cityMarker.addTo(cityLayer);
+                cityMarker.addTo(cityMarkers);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -211,7 +202,7 @@ function getPark() {
                 let desc = parkResult[i].name;
                 let snippet = parkResult[i].snippet;
                 let parkMarker = L.marker(latlng, {icon: parkMarkerIcon}).bindPopup(desc + '<hr>' + snippet);
-                parkMarker.addTo(parkLayer);
+                parkMarker.addTo(parkMarkers);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -245,7 +236,7 @@ function getBeach() {
                 let latlng = [lat, lng];
                 let desc = beachResult[i].name;
                 let beachMarker = L.marker(latlng, {icon: beachMarkerIcon}).bindPopup(desc);
-                beachMarker.addTo(beachLayer);
+                beachMarker.addTo(beachMarkers);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -280,7 +271,7 @@ function getPoi() {
                 let desc = poiResult[i].name;
                 let snippet = poiResult[i].snippet;
                 let poiMarker = L.marker(latlng, {icon: poiMarkerIcon}).bindPopup(desc);
-                poiMarker.addTo(poiLayer);
+                poiMarker.addTo(poiMarkers);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {

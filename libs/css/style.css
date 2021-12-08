@@ -104,8 +104,8 @@ body {
   height: 50px;
   width: 50px;
   z-index: 999;
-  color: dodgerblue;
-  font-size: 2rem;
+  color: rgb(0, 123, 255);
+  font-size: 1.2rem;
   cursor: pointer;
   border-radius: 10px;
 }

@@ -18,6 +18,12 @@ let beachLayer = L.layerGroup([]);
 let parkLayer = L.layerGroup([]);
 let poiLayer = L.layerGroup([]);
 
+
+let cityMarkers = L.markerClusterGroup();
+let beachMarkers = L.markerClusterGroup();
+let parkMarkers = L.markerClusterGroup();
+let poiMarkers = L.markerClusterGroup();
+
 var userMarkerIcon = L.AwesomeMarkers.icon({
 icon: 'user-alt', 
 markerColor: 'darkpurple',
@@ -65,6 +71,10 @@ let mapStyle1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 });
 
 map.addLayer(mapStyle1);
+map.addLayer(cityMarkers);
+map.addLayer(beachMarkers);
+map.addLayer(parkMarkers);
+map.addLayer(poiMarkers);
 
 //Creates control placement functionality
 addControlPlaceholders(map);
@@ -78,7 +88,7 @@ function loadLayers(){
     let lng = coords[1].longitude;
 
     if (!userMarker) {
-        userMarker = L.marker([lat,lng], {icon: userMarkerIcon});
+        userMarker = L.marker([lat,lng], {icon: userMarkerIcon}).bindPopup('This is you.');
         userMarker.addTo(userGroup);
         userGroup.addTo(map);
     }
@@ -92,10 +102,10 @@ function loadLayers(){
 
     let overlays = {
         'Location': userGroup,
-        "Cities": cityLayer,
-        "Parks": parkLayer,
-        "Beaches": beachLayer,
-        "Places of Interest": poiLayer
+        "Cities": cityMarkers,
+        "Parks": parkMarkers,
+        "Beaches": beachMarkers,
+        "Places of Interest": poiMarkers
     }
 
     if (layerControl) {
@@ -112,10 +122,11 @@ function loadLayers(){
 function resetUserLocation() {
     map.removeLayer(countryBorder);
     map.removeLayer(userMarker);
-    cityLayer = L.layerGroup([]); 
-    beachLayer = L.layerGroup([]); 
-    parkLayer = L.layerGroup([]); 
-    poiLayer = L.layerGroup([]); 
+    
+    cityMarkers.clearLayers();
+    beachMarkers.clearLayers();
+    parkMarkers.clearLayers();
+    poiMarkers.clearLayers();
 }
 
 function findBorders(borders, countryName){
